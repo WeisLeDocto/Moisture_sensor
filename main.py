@@ -57,7 +57,8 @@ while True:
 
   # Either displaying the information or sending it to the sprinkler
   if display_on:
-    display.display(f"Humidite: {moisture}\nTemp: {temperature} C")
+    display.display("Humidite: {}\nTemp: {} C".format(int(moisture),
+                                                      int(temperature)))
   else:
     dac.write(min(1023, moisture))
   # Re-enabling callback
