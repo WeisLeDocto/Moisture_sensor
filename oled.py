@@ -39,8 +39,8 @@ class Oled:
 
     self._i2c = i2c
     self._addr = 0x3C
-    self._rows = 128
-    self._cols = 32
+    self._rows = 32
+    self._cols = 128
     self._buf = bytearray(self._cols // 8 * self._rows)
 
     for cmd in init_cmds:
