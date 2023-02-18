@@ -22,47 +22,36 @@ dac.write(0)
 
 # Pins for checking whether the sprinkler is connected
 pin_in = machine.Pin("PA06", machine.Pin.IN, machine.Pin.PULL_DOWN)
-display_on = not bool(pin_in.value())
+display_on = bool(pin_in.value())
+prev = display_on
 
-
-def power_callback(pin) -> None:
-  """Callback called when the polarity of the pin checking whether the
-  sprinkler is connected changes.
-
-  When the sprinkler is connected, the display is shut off and the DAC is
-  enabled, and vice-versa when the sprinkler is disconnected.
-  """
-
-  global display
-  connected = bool(pin.value())
-  display.power(not connected)
-  global display_on
-  display_on = not connected
-  global dac
-  dac.write(0)
-
-
-# Affecting the callback to the pin
-pin_in.irq(power_callback,
-           trigger=machine.Pin.IRQ_FALLING | machine.Pin.IRQ_RISING)
-
-
+# The main loop, executed once every second
 while True:
 
-  # Disabling callback as we don't want it to trigger while sending data
-  machine.disable_irq()
+  # Checking whether the sprinkler is connected
+  display_on = bool(pin_in.value())
+
   # Reading the moisture and temperature
   moisture = sensor.read_moisture()
   temperature = round(sensor.read_temperature(), 1)
 
   # Either displaying the information or sending it to the sprinkler
   if display_on:
+    # If the display was not previously on, switching it on
+    # Also disabling the sprinkler
+    if not prev:
+      display.power(True)
+      dac.write(0)
+    # Updating the displayed value
     display.display("Humidite: {}\nTemp: {} C".format(int(moisture),
                                                       int(temperature)))
   else:
+    # Making sure the display remains off
+    display.power(False)
     dac.write(min(1023, moisture))
-  # Re-enabling callback
-  machine.enable_irq()
+
+  # Storing the value of display_on for the next loop
+  prev = display_on
 
   # No need to loop to fast
   sleep_ms(1000)
