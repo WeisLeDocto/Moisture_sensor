@@ -23,7 +23,7 @@ dac.write(0)
 # Pins for checking whether the sprinkler is connected
 pin_in = machine.Pin("PA06", machine.Pin.IN, machine.Pin.PULL_DOWN)
 display_on = bool(pin_in.value())
-prev = display_on
+prev = False
 
 # The main loop, executed once every second
 while True:

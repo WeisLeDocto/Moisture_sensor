@@ -20,7 +20,6 @@ init_cmds = (0xAE,  # Switch off display
              0xA4,  # Display follows RAM content
              0xA6,  # Display pixels are not inverted
              0x8D, 0x14,  # Enable charge pump
-             0xAF  # Switch display on
              )
 
 
