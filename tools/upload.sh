@@ -62,7 +62,7 @@ done
 # Displaying the list of possible files to upload
 i=1
 echo "Which file to upload ?"
-for entry in ../*
+for entry in ../code/*
 do
   if echo "$entry" | grep -q .py; then
     echo "$i" ': ' "$entry"
@@ -82,7 +82,7 @@ while { ! echo "$file_nr" | grep -q '^[0-9]' || [ "$file_nr" -gt "$((i-1))" ] ||
   echo "Invalid choice !"
   i=1
   echo "Which file to upload ?"
-  for entry in ../*
+  for entry in ../code/*
   do
   if echo "$entry" | grep -q .py; then
     echo "$i" ': ' "$entry"
@@ -98,7 +98,7 @@ done
 
 # Displaying a message indicating which file will be uploaded to which device
 i=1
-for entry in ../*
+for entry in ../code/*
 do
   if echo "$entry" | grep -q .py; then
     if [ "$i" = "$file_nr" ]; then
