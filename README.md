@@ -24,3 +24,7 @@ This repo contains :
 - the KiCad files for ordering the PCB from a PCB manufacturer
 - the MicroPython code to upload to the microcontroller for driving the setup
 - tools that were handful for the project
+
+Pictures of the final assembly :
+![Lid opened](pictures/lid_opened.jpg)
+![Lid closed](pictures/lid_closed.jpg)
